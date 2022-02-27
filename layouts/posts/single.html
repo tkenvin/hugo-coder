@@ -10,17 +10,14 @@
         </div>
         <div class="post-meta">
           <div class="date">
-            <span class="posted-on">
-              <i class="fa fa-calendar" aria-hidden="true"></i>
-              <time datetime='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'>
-                {{ .Date.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}
-              </time>
-            </span>
-            <span class="reading-time">
-              <i class="fa fa-clock-o" aria-hidden="true"></i>
-              {{ i18n "reading_time" .ReadingTime }}
-            </span>
+            {{ with .Date.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}
+              {{ partial "posts/date.html" . }}
+            {{ end }}
           </div>
+          <span class="reading-time">
+            <i class="fa fa-clock-o" aria-hidden="true"></i>
+            {{ i18n "reading_time" .ReadingTime }}
+          </span>
           {{ with .Page.Params.Authors }}{{ partial "taxonomy/authors.html" . }}{{ end }}
           {{ with .Page.Params.Categories }}{{ partial "taxonomy/categories.html" . }}{{ end }}
           {{ with .Page.Params.Tags }}{{ partial "taxonomy/tags.html" . }}{{ end }}
@@ -34,6 +31,18 @@
         {{ .Content }}
       </div>
 
+      <div>
+        <span>First published on</span>
+        {{ with .PublishDate.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}
+          {{ partial "posts/date.html" . }}
+        {{ end }}
+      </div>
+      <div>
+        <span>Edited on</span>
+        {{ with .Lastmod.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}
+          {{ partial "posts/date.html" . }}
+        {{ end }}
+      </div>
 
       <footer>
         {{ partial "posts/series.html" . }}
