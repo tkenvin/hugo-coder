@@ -12,7 +12,7 @@
     </header>
     {{ .Content }}
     <ul>
-      {{- range .Paginator.Pages -}}
+      {{- range .Paginator.Pages.ByPublishDate.Reverse -}}
         {{- .Render "li" -}}
       {{- end -}}
     </ul>
