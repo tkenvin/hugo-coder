@@ -4,6 +4,9 @@
 <head>
   <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
   {{ partial "head.html" . }}
+  {{ range .Params.css }}
+    <link rel="stylesheet" href="{{ . }}">
+  {{ end }}
 </head>
 
 {{ $csClass := "colorscheme-light" }}
@@ -61,6 +64,10 @@
   {{ end }}
   {{ end }}
 
+
+  {{ range .Params.js }}
+  <script src="{{ . | relURL }}"></script>
+  {{ end }}
 
   {{ template "_internal/google_analytics.html" . }}
 
