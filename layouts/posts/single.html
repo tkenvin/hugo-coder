@@ -19,7 +19,7 @@
             {{ end }}
           </div>
           <span class="reading-time">
-            <i class="fa fa-clock-o" aria-hidden="true"></i>
+            <i class="fa fa-solid fa-clock" aria-hidden="true"></i>
             {{ i18n "reading_time" .ReadingTime }}
           </span>
           {{ with .GetTerms "authors" }}{{ partial "taxonomy/authors.html" . }}{{ end }}
@@ -42,7 +42,9 @@
         {{ partial "posts/commento.html" . }}
         {{ partial "posts/utterances.html" . }}
         {{ partial "posts/giscus.html" . }}
+        {{ partial "posts/mastodon.html" . }}
         {{ partial "posts/telegram.html" . }}
+        {{ partial "posts/cusdis.html" . }}
       </footer>
     </article>
 
