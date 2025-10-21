@@ -2,7 +2,7 @@
 <html lang="{{ .Site.Language.Lang }}">
 
 <head>
-  <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
+  <title>{{ block "title" . }}{{ .Site.Params.HeadTitle | default .Site.Title }}{{ end }}</title>
   {{ partial "head.html" . }}
   {{ range .Params.css }}
     <link rel="stylesheet" href="{{ . }}">
@@ -44,7 +44,7 @@
   {{ $script := resources.Get "js/coder.js" }}
   <script src="{{ $script.RelPermalink }}"></script>
   {{ else }}
-  {{ $script := resources.Get "js/coder.js" | minify | fingerprint }}
+  {{ $script := resources.Get "js/coder.js" | resources.Minify | resources.Fingerprint }}
   <script src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}"></script>
   {{ end }}
 
@@ -53,7 +53,7 @@
   {{ $script := resources.Get . }}
   <script src="{{ $script.RelPermalink }}"></script>
   {{ else }}
-  {{ $script := resources.Get . | minify | fingerprint }}
+  {{ $script := resources.Get . | resources.Minify | resources.Fingerprint }}
   <script src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}"></script>
   {{ end }}
   {{ end }}
@@ -63,7 +63,7 @@
   {{ $script := resources.GetRemote . }}
   <script src="{{ $script.RelPermalink }}"></script>
   {{ else }}
-  {{ $script := resources.GetRemote . | minify | fingerprint }}
+  {{ $script := resources.GetRemote . | resources.Minify | resources.Fingerprint }}
   <script src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}"></script>
   {{ end }}
   {{ end }}
@@ -115,6 +115,10 @@
   {{- partial "analytics/microanalyticsio" . -}}
   {{ end }}
 
+  {{ if and .Site.Params.onedollarstats .Site.Params.onedollarstats.id }}
+  {{- partial "analytics/onedollarstats" . -}}
+  {{ end }}
+
   {{ if .Site.Params.vercelAnalytics}}
   {{- partial "analytics/vercel" . -}}
   {{ end }}
@@ -137,5 +141,4 @@
 
   {{- partial "body/extensions" . -}}
 </body>
-
 </html>
